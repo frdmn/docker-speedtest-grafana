@@ -2,7 +2,7 @@
 
 while :; do
 	echo "[Info][$(date)] Starting speedtest..."
-	OUTPUT = $(/app/speedtest_cli.py)
+	OUTPUT=$(/app/speedtest_cli.py)
 	DOWNLOAD=$(echo "${OUTPUT}" | grep "Download:" | awk -F " " '{print $2}')
 	UPLOAD=$(echo "$OUTPUT" | grep "Upload:" | awk -F " " '{print $2}')
 	echo "[Info][$(date)] Speedtest results - Download: ${DOWNLOAD}, Upload: ${UPLOAD}"
