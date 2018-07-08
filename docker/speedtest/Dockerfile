@@ -1,13 +1,10 @@
-FROM ubuntu:trusty
+FROM node:8
 MAINTAINER Jonas Friedmann <j@frd.mn>
 
-RUN mkdir -p /app
+WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y wget python curl
+COPY . .
 
-RUN wget https://raw.github.com/sivel/speedtest-cli/master/speedtest.py -O /app/speedtest_cli.py
-RUN chmod +x /app/speedtest_cli.py
+RUN npm install -g speed-test json
 
-ADD scripts/ /app/
-
-CMD bash -c /app/run.sh
+CMD [ "npm", "start" ]
