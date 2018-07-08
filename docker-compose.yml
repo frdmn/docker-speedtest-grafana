@@ -2,6 +2,7 @@ version: '2'
 
 services:
   influxdb:
+    restart: always
     image: influxdb:1.5
     volumes:
       - "./data/influxdb/:/var/lib/influxdb"
@@ -11,6 +12,7 @@ services:
       - "INFLUXDB_DB=speedtest"
 
   grafana:
+    restart: always
     image: grafana/grafana:5.1.0
     volumes:
       - "./docker/grafana/provisioning:/etc/grafana/provisioning"
@@ -24,6 +26,7 @@ services:
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
 
   speedtest:
+    restart: always
     build: ./docker/speedtest 
     links:
       - "influxdb:influxdb"
