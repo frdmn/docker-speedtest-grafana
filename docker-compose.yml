@@ -2,7 +2,7 @@ version: '2'
 
 services:
   influxdb:
-    image: influxdb 
+    image: influxdb:1.5
     volumes:
       - "./data/influxdb/:/var/lib/influxdb"
     environment:
@@ -11,7 +11,7 @@ services:
       - "INFLUXDB_DB=speedtest"
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:5.1.0
     volumes:
       - "./data/grafana:/var/lib/grafana"
       - "./docker/grafana/provisioning:/etc/grafana/provisioning"
