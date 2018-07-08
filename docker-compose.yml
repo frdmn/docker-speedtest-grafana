@@ -6,27 +6,27 @@ services:
     volumes:
       - "./data/influxdb/:/var/lib/influxdb"
     environment:
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=password
-      - INFLUXDB_DB=speedtest
+      - "INFLUXDB_ADMIN_USER=admin"
+      - "INFLUXDB_ADMIN_PASSWORD=password"
+      - "INFLUXDB_DB=speedtest"
 
   grafana:
     image: grafana/grafana
     volumes:
-      - "./data/grafana/:/var/lib/grafana"
-      - "./docker/grafana/provisioning/:/etc/grafana/provisioning/"
+      - "./data/grafana:/var/lib/grafana"
+      - "./docker/grafana/provisioning:/etc/grafana/provisioning"
     ports:
       - "${GRAFANA_PORT}:3000"
     links:
-      - influxdb:influxdb
+      - "influxdb:influxdb"
     environment:
-      - GF_SERVER_ROOT_URL=http://localhost
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - "GF_SERVER_ROOT_URL=http://localhost"
+      - "GF_SECURITY_ADMIN_PASSWORD=admin"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
 
   speedtest:
     build: ./docker/speedtest 
     links:
-      - influxdb:influxdb
+      - "influxdb:influxdb"
     environment:
-      - SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}
+      - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
