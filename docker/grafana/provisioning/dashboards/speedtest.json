@@ -12,10 +12,11 @@
       }
     ]
   },
+  "description": "Display speedtest.net results (ping, upload and download speed)",
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 0,
-  "id": null,
+  "graphTooltip": 2,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -31,7 +32,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 4,
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -56,6 +57,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "$$hashKey": "object:547",
           "alias": "Download",
           "groupBy": [
             {
@@ -94,6 +96,7 @@
           "tags": []
         },
         {
+          "$$hashKey": "object:548",
           "alias": "Upload",
           "groupBy": [
             {
@@ -165,7 +168,127 @@
           "logBase": 1,
           "max": null,
           "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fill": 1,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "$$hashKey": "object:256",
+          "alias": "Ping",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") FROM \"ping\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Ping",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": false,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:318",
+          "format": "ms",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
           "show": true
+        },
+        {
+          "$$hashKey": "object:319",
+          "format": "Mbits",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
         }
       ],
       "yaxis": {
@@ -211,6 +334,6 @@
   },
   "timezone": "",
   "title": "Speedtest results",
-  "uid": null,
-  "version": 0
+  "uid": "0A6hxROiz",
+  "version": 1
 }
