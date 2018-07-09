@@ -36,7 +36,9 @@ You can make use of the following environment variables / configurations:
 
 ## Usage
 
-### Start/create services
+### Services
+
+#### Start/create services
 
 
 ```shell
@@ -46,7 +48,7 @@ Creating speedtest_grafana_1   ... done
 Creating speedtest_speedtest_1 ... done
 ```
 
-### Stop services
+#### Stop services
 
 ```shell
 $ docker-compose stop
@@ -55,7 +57,7 @@ Stopping speedtest_grafana_1   ... done
 Stopping speedtest_speedtest_1 ... done
 ```
 
-### Upgrade services
+#### Upgrade services
 
 ```shell
 $ docker-compose stop
@@ -64,7 +66,7 @@ $ docker-compose rm
 $ docker-compose up -d
 ```
 
-### Check logs
+#### Check logs
 
 ```shell
 $ docker-compose logs -f
@@ -73,6 +75,15 @@ $ docker-compose logs -f
 ```shell
 $ docker-compose logs -f grafana
 ```
+
+### Grafana
+
+#### Administrative access
+
+Access `http://${HOSTNAME}:${GRAFANA_PORT}` ([http://localhost:3000](`http://localhost:3000`) by default) and login using the following default credentials:
+
+* Username: `admin`
+* Password: `admin`
 
 ## Contributing
 
