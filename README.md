@@ -34,6 +34,46 @@ You can make use of the following environment variables / configurations:
 | `GRAFANA_PORT` | `3000` | Port to bind Grafana webinterface on the host system |
 | `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
 
+## Usage
+
+### Start/create services
+
+
+```shell
+$ docker-compose up -d
+Creating speedtest_influxdb_1  ... done
+Creating speedtest_grafana_1   ... done
+Creating speedtest_speedtest_1 ... done
+```
+
+### Stop services
+
+```shell
+$ docker-compose stop
+Stopping speedtest_influxdb_1  ... done
+Stopping speedtest_grafana_1   ... done
+Stopping speedtest_speedtest_1 ... done
+```
+
+### Upgrade services
+
+```shell
+$ docker-compose stop
+$ docker-compose pull
+$ docker-compose rm
+$ docker-compose up -d
+```
+
+### Check logs
+
+```shell
+$ docker-compose logs -f
+```
+
+```shell
+$ docker-compose logs -f grafana
+```
+
 ## Contributing
 
 1. Fork it
