@@ -23,12 +23,14 @@ cp .env.sample .env
 docker-compose up -d
 ```
 
-## Usage
+## Configuration
 
-Here's a short explanation how to use `docker-speedtest`:
+You can make use of the following environment variables / configurations:
 
-* Use it
-* Profit
+| Environment variable | Default value | Description
+|----------------------|---------------|------------| 
+| `GRAFANA_PORT` | `3000` | Port to bind Grafana webinterface on the host system |
+| `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
 
 ## Contributing
 
