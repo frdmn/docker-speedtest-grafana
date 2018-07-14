@@ -33,6 +33,9 @@ You can make use of the following environment variables / configurations:
 |----------------------|---------------|------------| 
 | `GRAFANA_PORT` | `3000` | Port to bind Grafana webinterface on the host system |
 | `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
+| `SPEEDTEST_HOST` | `local` | Host for speedtest is running |
+| `INFLUXDB_URL` | `http://influxdb:8086` | Url of InfluxDB |
+| `INFLUXDB_DB` | `speedtest` | Database to save Speedtest Results |
 
 ## Usage
 
@@ -77,6 +80,12 @@ $ docker-compose logs -f grafana
 ```
 
 ### Grafana
+
+#### Dashboard
+
+By Default the Dashboard shows all Speedtest Results. To filter the Results by Host you can add `and host = 'local'` in WHERE clause of SQL Select.
+Example (Download Time Serie): `SELECT mean("value") FROM "download" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)`
+
 
 #### Administrative access
 
