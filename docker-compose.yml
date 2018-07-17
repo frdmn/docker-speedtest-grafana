@@ -32,3 +32,4 @@ services:
       - "influxdb:influxdb"
     environment:
       - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
+      - "SPEEDTEST_HOST={SPEEDTEST_HOST}"
