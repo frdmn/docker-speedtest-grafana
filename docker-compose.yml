@@ -27,7 +27,7 @@ services:
 
   speedtest:
     restart: always
-    build: ./docker/speedtest 
+    build: ./docker/speedtest
     links:
       - "influxdb:influxdb"
     environment:

@@ -30,7 +30,7 @@ docker-compose up -d
 You can make use of the following environment variables / configurations:
 
 | Environment variable | Default value | Description
-|----------------------|---------------|------------| 
+|----------------------|---------------|------------|
 | `GRAFANA_PORT` | `3000` | Port to bind Grafana webinterface on the host system |
 | `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
 | `SPEEDTEST_HOST` | `local` | Display name of the client |
@@ -85,7 +85,7 @@ $ docker-compose logs -f grafana
 
 By default the dashboard shows all speedtest results. To filter for a specifc host, simply add a `and host = 'local'` statement in the `WHERE` clause of the SQL select.
 
-Example (Download Time Serie): 
+Example (Download Time Serie):
 
 ```
 SELECT mean("value") FROM "download" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)
