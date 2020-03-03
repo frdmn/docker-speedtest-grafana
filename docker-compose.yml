@@ -20,19 +20,19 @@ services:
       - "./docker/grafana/provisioning:/etc/grafana/provisioning"
     ports:
       - "${GRAFANA_PORT}:3000"
-    links:
-      - "influxdb:influxdb"
     environment:
       - "GF_SERVER_ROOT_URL=http://localhost"
       - "GF_SECURITY_ADMIN_PASSWORD=admin"
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
+    depends_on:
+      - influxdb
 
   speedtest:
     restart: always
     container_name: speedtest
     build: ./docker/speedtest
-    links:
-      - "influxdb:influxdb"
     environment:
       - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
       - "SPEEDTEST_HOST=${SPEEDTEST_HOST}"
+    depends_on:
+      - influxdb
