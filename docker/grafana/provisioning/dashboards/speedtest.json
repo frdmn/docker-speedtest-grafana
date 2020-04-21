@@ -17,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "iteration": 1587470916056,
+  "iteration": 1587472234230,
   "links": [],
   "panels": [
     {
@@ -29,6 +29,7 @@
         "x": 0,
         "y": 0
       },
+      "hideTimeOverride": false,
       "id": 10,
       "links": [],
       "options": {
@@ -76,13 +77,19 @@
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
             }
           ],
           "hide": false,
           "measurement": "download",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"download\" WHERE $timeFilter GROUP BY time(1h)",
+          "query": "SELECT mean(\"value\") FROM \"download\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -168,13 +175,19 @@
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
             }
           ],
           "hide": false,
           "measurement": "upload",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"download\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"value\") FROM \"upload\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -259,6 +272,12 @@
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
             }
           ],
           "hide": false,
@@ -616,6 +635,7 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "tatooine",
           "value": "tatooine"
         },
@@ -642,7 +662,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -676,5 +696,5 @@
   "variables": {
     "list": []
   },
-  "version": 1
+  "version": 0
 }
