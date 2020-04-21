@@ -17,28 +17,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "iteration": 1587447400316,
+  "iteration": 1587470916056,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
       "datasource": "InfluxDB",
-      "decimals": null,
-      "format": "Mbits",
-      "gauge": {
-        "maxValue": 500,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": true,
-        "thresholdMarkers": true
-      },
       "gridPos": {
         "h": 8,
         "w": 8,
@@ -46,42 +30,42 @@
         "y": 0
       },
       "id": 10,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:279",
-          "name": "value to text",
-          "value": 1
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 250,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "dark-red",
+                  "value": null
+                },
+                {
+                  "color": "dark-green",
+                  "value": 200
+                }
+              ]
+            },
+            "unit": "Mbits"
+          },
+          "overrides": [],
+          "values": false
         },
-        {
-          "$$hashKey": "object:280",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "horizontal",
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.7.2",
+      "repeat": null,
+      "repeatDirection": "h",
       "targets": [
         {
           "$$hashKey": "object:187",
@@ -89,7 +73,7 @@
           "groupBy": [
             {
               "params": [
-                "1h"
+                "$__interval"
               ],
               "type": "time"
             }
@@ -98,7 +82,7 @@
           "measurement": "download",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"download\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"value\") FROM \"download\" WHERE $timeFilter GROUP BY time(1h)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -116,44 +100,23 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
-      "thresholds": "",
       "timeFrom": "1w",
       "timeShift": null,
       "title": "Average download speed / week",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:282",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
       "datasource": "InfluxDB",
-      "decimals": null,
-      "format": "Mbits",
-      "gauge": {
-        "maxValue": 50,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": true,
-        "thresholdMarkers": true
-      },
       "gridPos": {
         "h": 8,
         "w": 8,
@@ -161,42 +124,40 @@
         "y": 0
       },
       "id": 8,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:279",
-          "name": "value to text",
-          "value": 1
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "max": 50,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "semi-dark-red",
+                  "value": null
+                },
+                {
+                  "color": "semi-dark-green",
+                  "value": 35
+                }
+              ]
+            },
+            "unit": "Mbits"
+          },
+          "overrides": [],
+          "values": false
         },
-        {
-          "$$hashKey": "object:280",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "horizontal",
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.7.2",
       "targets": [
         {
           "$$hashKey": "object:187",
@@ -204,7 +165,7 @@
           "groupBy": [
             {
               "params": [
-                "1h"
+                "$__interval"
               ],
               "type": "time"
             }
@@ -231,44 +192,23 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
-      "thresholds": "",
       "timeFrom": "1w",
       "timeShift": null,
       "title": "Average upload speed / week",
-      "type": "singlestat",
-      "valueFontSize": "50%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:282",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
       "datasource": "InfluxDB",
-      "decimals": null,
-      "format": "ms",
-      "gauge": {
-        "maxValue": 0,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": true,
-        "thresholdMarkers": true
-      },
       "gridPos": {
         "h": 8,
         "w": 8,
@@ -276,42 +216,39 @@
         "y": 0
       },
       "id": 6,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "$$hashKey": "object:279",
-          "name": "value to text",
-          "value": 1
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "nullValueMode": "connected",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 30
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": [],
+          "values": false
         },
-        {
-          "$$hashKey": "object:280",
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal"
       },
-      "tableColumn": "",
+      "pluginVersion": "6.7.2",
       "targets": [
         {
           "$$hashKey": "object:187",
@@ -319,7 +256,7 @@
           "groupBy": [
             {
               "params": [
-                "1h"
+                "$__interval"
               ],
               "type": "time"
             }
@@ -346,24 +283,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
-      "thresholds": "",
       "timeFrom": "1w",
       "timeShift": null,
       "title": "Average ping latency / week",
-      "type": "singlestat",
-      "valueFontSize": "150%",
-      "valueMaps": [
-        {
-          "$$hashKey": "object:282",
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "type": "stat"
     },
     {
       "aliasColors": {},
@@ -498,41 +430,6 @@
               "value": "/^$host$/"
             }
           ]
-        },
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
         }
       ],
       "thresholds": [],
@@ -637,10 +534,11 @@
               "type": "fill"
             }
           ],
+          "measurement": "ping",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"value\") FROM \"ping\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -657,7 +555,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -712,11 +616,8 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "karlmacbook",
-          "value": [
-            "karlmacbook"
-          ]
+          "text": "tatooine",
+          "value": "tatooine"
         },
         "datasource": "InfluxDB",
         "definition": "show tag values from download with key=\"host\"",
@@ -724,7 +625,7 @@
         "includeAll": false,
         "index": -1,
         "label": null,
-        "multi": true,
+        "multi": false,
         "name": "host",
         "options": [],
         "query": "show tag values from download with key=\"host\"",
@@ -741,7 +642,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
