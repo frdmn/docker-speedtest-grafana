@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:51",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "id": 1,
+  "iteration": 1587447400316,
   "links": [],
   "panels": [
     {
@@ -371,12 +372,14 @@
       "dashes": false,
       "datasource": "InfluxDB",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 4,
       "legend": {
         "alignAsTable": false,
@@ -392,6 +395,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -418,10 +424,11 @@
               "type": "fill"
             }
           ],
+          "measurement": "download",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"download\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
-          "rawQuery": true,
+          "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE (\"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -438,7 +445,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         },
         {
           "$$hashKey": "object:548",
@@ -457,11 +470,53 @@
               "type": "fill"
             }
           ],
+          "measurement": "upload",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") FROM \"upload\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
-          "rawQuery": true,
+          "query": "SELECT mean(\"value\") FROM \"upload\" WHERE \"host\" =~ /^[[host]]$/ and $timeFilter GROUP BY time($interval) fill(null)",
+          "rawQuery": false,
           "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
@@ -482,6 +537,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Upload / Download",
       "tooltip": {
@@ -489,7 +545,6 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -500,6 +555,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:618",
           "format": "Mbits",
           "label": null,
           "logBase": 1,
@@ -508,6 +564,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:619",
           "format": "Mbits",
           "label": null,
           "logBase": 1,
@@ -528,12 +585,14 @@
       "dashes": false,
       "datasource": "InfluxDB",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 24,
         "x": 0,
         "y": 16
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": false,
@@ -549,6 +608,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -600,6 +662,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Ping",
       "tooltip": {
@@ -607,7 +670,6 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -642,14 +704,44 @@
       }
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "karlmacbook",
+          "value": [
+            "karlmacbook"
+          ]
+        },
+        "datasource": "InfluxDB",
+        "definition": "show tag values from download with key=\"host\"",
+        "hide": 0,
+        "includeAll": false,
+        "index": -1,
+        "label": null,
+        "multi": true,
+        "name": "host",
+        "options": [],
+        "query": "show tag values from download with key=\"host\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -680,5 +772,8 @@
   "timezone": "",
   "title": "Speedtest results",
   "uid": "0A6hxROiz",
+  "variables": {
+    "list": []
+  },
   "version": 1
 }
