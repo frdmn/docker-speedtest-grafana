@@ -17,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "iteration": 1587472234230,
+  "iteration": 1587492187733,
   "links": [],
   "panels": [
     {
@@ -48,6 +48,10 @@
                 {
                   "color": "dark-red",
                   "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 100
                 },
                 {
                   "color": "dark-green",
@@ -148,6 +152,10 @@
                 {
                   "color": "semi-dark-red",
                   "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 17.5
                 },
                 {
                   "color": "semi-dark-green",
@@ -257,7 +265,7 @@
           "overrides": [],
           "values": false
         },
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal"
       },
@@ -451,7 +459,17 @@
           ]
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "$$hashKey": "object:195",
+          "colorMode": "critical",
+          "fill": false,
+          "line": true,
+          "op": "gt",
+          "value": 200,
+          "yaxis": "left"
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
