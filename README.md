@@ -35,8 +35,7 @@ You can make use of the following environment variables / configurations:
 | `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
 | `SPEEDTEST_HOST` | `local` | Display name of the client |
 | `INFLUXDB_DB` | `speedtest` | Database to save speedtest results |
-| `INFLUXDB_PORT` | `8086` | Port of InfluxDB |
-| `INFLUXDB_URL` | `http://influxdb:8086` | URL of InfluxDB |
+| `INFLUXDB_HOST` | `influxdb` | Name of the InfluxDB host/containers |
 
 ## Usage
 
