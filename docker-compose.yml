@@ -6,7 +6,6 @@ services:
     image: influxdb:1.8
     ports:
       - "8086:8086"
-    container_name: influxdb
     volumes:
       - "./data/influxdb/:/var/lib/influxdb"
     environment:
@@ -17,7 +16,6 @@ services:
   grafana:
     restart: always
     image: grafana/grafana:6.7.2
-    container_name: grafana
     volumes:
       - "./docker/grafana/provisioning:/etc/grafana/provisioning"
     ports:
