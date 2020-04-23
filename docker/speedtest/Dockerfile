@@ -15,7 +15,7 @@ RUN apt-get update
 RUN apt-get install speedtest
 
 
-COPY contents .
+COPY . .
 RUN npm ci
 
 CMD [ "node", "index.js" ]
