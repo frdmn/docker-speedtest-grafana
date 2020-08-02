@@ -19,10 +19,16 @@ git clone https://github.com/frdmn/docker-speedtest-grafana
 cp .env.sample .env
 ```
 
-4. Spin up the containers:
+4. Start dockerd in a separate terminal
 
 ```shell
-docker-compose up -d
+sudo dockerd
+```
+
+5. In a new terminal spin up the containers:
+
+```shell
+sudo docker-compose up -d
 ```
 
 ## Configuration
@@ -123,7 +129,7 @@ git push origin feature/my-new-feature
 
 ## Requirements / Dependencies
 
-* Docker (incl. `docker-compose`)
+* Docker (incl. `docker-compose` , `dockerd`)
 
 ## Version
 
