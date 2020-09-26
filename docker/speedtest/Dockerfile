@@ -18,11 +18,6 @@ LABEL maintainer="Jonas Friedmann <j@frd.mn>"
 
 WORKDIR /usr/src/app
 
-ENV INFLUXDB_DB="speedtest" \
-    INFLUXDB_HOST="influxdb" \
-    SPEEDTEST_HOST="local" \
-    SPEEDTEST_INTERVAL=3600
-
 CMD [ "node", "index.js" ]
 
 COPY --from=get-speedtest /usr/bin/speedtest /usr/bin/speedtest
