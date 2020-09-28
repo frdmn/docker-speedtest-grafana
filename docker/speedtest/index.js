@@ -4,6 +4,8 @@ const delay = require("delay");
 
 process.env.INFLUXDB_HOST = (process.env.INFLUXDB_HOST) ? process.env.INFLUXDB_HOST : 'influxdb';
 process.env.INFLUXDB_DB = (process.env.INFLUXDB_DB) ? process.env.INFLUXDB_DB : 'speedtest';
+process.env.INFLUXDB_USERNAME = (process.env.INFLUXDB_DB) ? process.env.INFLUXDB_DB : 'root';
+process.env.INFLUXDB_PASSWORD = (process.env.INFLUXDB_DB) ? process.env.INFLUXDB_DB : 'root';
 process.env.SPEEDTEST_HOST = (process.env.SPEEDTEST_HOST) ? process.env.SPEEDTEST_HOST : 'local';
 process.env.SPEEDTEST_INTERVAL = (process.env.SPEEDTEST_INTERVAL) ? process.env.SPEEDTEST_INTERVAL : 3600;
 
@@ -41,7 +43,9 @@ const pushToInflux = async (influx, metrics) => {
   try {
     const influx = new Influx.InfluxDB({
       host: process.env.INFLUXDB_HOST,
-      database: process.env.INFLUXDB_DB
+      database: process.env.INFLUXDB_DB,
+      username: process.env.INFLUXDB_USERNAME,
+      password: process.env.INFLUXDB_PASSWORD,
     });
 
     while (true) {

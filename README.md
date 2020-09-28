@@ -36,6 +36,8 @@ You can make use of the following environment variables / configurations:
 | `SPEEDTEST_HOST` | `local` | Display name of the client |
 | `INFLUXDB_DB` | `speedtest` | Database to save speedtest results |
 | `INFLUXDB_HOST` | `influxdb` | Name of the InfluxDB host/containers |
+| `INFLUXDB_USERNAME` | `root` | Username for InfluxDB authentication |
+| `INFLUXDB_PASSWORD` | `root` | Password for InfluxDB authentication |
 
 ## Usage
 
