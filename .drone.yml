@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: manifest
+  image: plugins/manifest
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    target: frdmn/speedtest-grafana:latest
+    template: frdmn/speedtest-grafana:latest-OS-ARCH
+    platforms:
+      - linux/amd64
+      - linux/arm
+      - linux/arm64
