@@ -34,5 +34,6 @@ services:
     environment:
       - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
       - "SPEEDTEST_HOST=${SPEEDTEST_HOST}"
+      - "SPEEDTEST_SERVER=${SPEEDTEST_SERVER}"
     depends_on:
       - influxdb
