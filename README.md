@@ -32,13 +32,15 @@ You can make use of the following environment variables / configurations:
 | Environment variable | Default value | Description
 |----------------------|---------------|------------|
 | `GRAFANA_PORT` | `3000` | Port to bind Grafana webinterface on the host system |
-| `SPEEDTEST_SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
+| `SPEEDTEST_INTERVAL` | `3600` | Interval/pause (in seconds) between speedtests |
 | `SPEEDTEST_HOST` | `local` | Display name of the client |
 | `SPEEDTEST_SERVER` | none | Optionally set specific speedtest.net derver ID, otherwise use the closest |
-| `INFLUXDB_DB` | `speedtest` | Database to save speedtest results |
+| `SPEEDTEST_ENHANCED_LOGGING` | none | Optionally write all returned speedtest CLI metrics to a single InfluxDB measurement (INFLUXDB_MEASUREMENT), else use legacy logging to download, upload, ping measurements only |
 | `INFLUXDB_HOST` | `influxdb` | Name of the InfluxDB host/containers |
 | `INFLUXDB_USERNAME` | `root` | Username for InfluxDB authentication |
 | `INFLUXDB_PASSWORD` | `root` | Password for InfluxDB authentication |
+| `INFLUXDB_DB` | `speedtest` | Database to save speedtest results |
+| `INFLUXDB_MEASUREMENT` | `results` | InfluxDB measurement to results to. Only valid if SPEEDTEST_ENHANCED_LOGGING is true |
 
 ## Usage
 
@@ -88,10 +90,16 @@ $ docker-compose logs -f grafana
 
 By default the dashboard shows all speedtest results. To filter for a specifc host, simply add a `and host = 'local'` statement in the `WHERE` clause of the SQL select.
 
-Example (Download Time Serie):
+Example 1 - Download Time Series:
 
 ```
 SELECT mean("value") FROM "download" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)
+```
+
+Example 2 - Download Time Series (If using SPEEDTEST_ENHANCED_lOGGING):
+
+```
+SELECT mean("download_bandwidth") FROM "results" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)
 ```
 
 #### Administrative access
