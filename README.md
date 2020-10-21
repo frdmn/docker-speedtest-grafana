@@ -90,10 +90,16 @@ $ docker-compose logs -f grafana
 
 By default the dashboard shows all speedtest results. To filter for a specifc host, simply add a `and host = 'local'` statement in the `WHERE` clause of the SQL select.
 
-Example (Download Time Serie):
+Example 1 - Download Time Series:
 
 ```
 SELECT mean("value") FROM "download" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)
+```
+
+Example 2 - Download Time Series (If using SPEEDTEST_ENHANCED_lOGGING):
+
+```
+SELECT mean("download_bandwidth") FROM "results" WHERE $timeFilter and host = 'local' GROUP BY time($interval) fill(null)
 ```
 
 #### Administrative access
