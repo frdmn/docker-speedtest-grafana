@@ -8,6 +8,7 @@ process.env.INFLUXDB_USERNAME = (process.env.INFLUXDB_USERNAME) ? process.env.IN
 process.env.INFLUXDB_PASSWORD = (process.env.INFLUXDB_PASSWORD) ? process.env.INFLUXDB_PASSWORD : 'root';
 process.env.SPEEDTEST_HOST = (process.env.SPEEDTEST_HOST) ? process.env.SPEEDTEST_HOST : 'local';
 process.env.SPEEDTEST_INTERVAL = (process.env.SPEEDTEST_INTERVAL) ? process.env.SPEEDTEST_INTERVAL : 3600;
+process.env.SPEEDTEST_SERVER = (process.env.SPEEDTEST_SERVER);
 
 const bitToMbps = bit => (bit / 1000 / 1000) * 8;
 
