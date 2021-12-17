@@ -29,7 +29,7 @@ services:
 
   speedtest:
     restart: always
-    image: frdmn/speedtest-grafana:latest
+    image: iamk3/docker-speedtest-grafana:latest
     container_name: speedtest
     environment:
       - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
