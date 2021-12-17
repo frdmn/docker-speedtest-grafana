@@ -15,7 +15,7 @@ services:
 
   grafana:
     restart: always
-    image: grafana/grafana:6.7.2
+    image: grafana/grafana:8.2.6
     volumes:
       - "./docker/grafana/provisioning:/etc/grafana/provisioning"
     ports:
