@@ -10,7 +10,7 @@ Docker setup consisting out of Grafana incl. a pre-configured dashboard, InfluxD
 2. Clone this repository:
 
 ```shell
-git clone https://github.com/frdmn/docker-speedtest-grafana
+git clone https://github.com/iamk3/docker-speedtest-grafana
 ```
 
 3. Create a copy of the sample `.env` file and adjust it at will:
