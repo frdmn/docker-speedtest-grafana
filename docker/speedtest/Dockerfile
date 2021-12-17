@@ -3,7 +3,7 @@ RUN apt-get update && apt-get install -y curl gnupg apt-transport-https dirmngr 
 RUN apt-get install -y debian-archive-keyring &> /dev/null
 RUN curl -s https://install.speedtest.net/app/cli/install.deb.sh | bash
 RUN apt-get update
-RUN apt-get install speedtest
+RUN apt-get install speedtest -y
 
 FROM alpine as install-dependencies
 RUN apk add --no-cache npm
@@ -13,7 +13,6 @@ RUN npm ci
 
 FROM alpine as prod-stage
 RUN apk add --no-cache nodejs
-LABEL maintainer="Jonas Friedmann <j@frd.mn>"
 
 WORKDIR /usr/src/app
 
