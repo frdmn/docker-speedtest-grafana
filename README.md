@@ -1,6 +1,6 @@
 # docker-speedtest-grafana
 
-![](https://i.imgur.com/CRoG1pb.png)
+![](https://i.imgur.com/IZb1F7M.png)
 
 Docker setup consisting out of Grafana incl. a pre-configured dashboard, InfluxDB and a [speedtest.net CLI test](https://www.speedtest.net/apps/cli) runner.
 
