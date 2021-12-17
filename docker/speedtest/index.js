@@ -25,7 +25,8 @@ const getSpeedMetrics = async () => {
   return {
     upload: bitToMbps(result.upload.bandwidth),
     download: bitToMbps(result.download.bandwidth),
-    ping: result.ping.latency
+    ping: result.ping.latency,
+    jitter: result.ping.jitter
   };
 };
 
@@ -52,7 +53,7 @@ const pushToInflux = async (influx, metrics) => {
       log("Starting speedtest...");
       const speedMetrics = await getSpeedMetrics();
       log(
-        `Speedtest results - Download: ${speedMetrics.download}, Upload: ${speedMetrics.upload}, Ping: ${speedMetrics.ping}`
+        `Speedtest results - Download: ${speedMetrics.download}, Upload: ${speedMetrics.upload}, Ping: ${speedMetrics.ping}, Jitter: ${speedMetrics.jitter}`
       );
       await pushToInflux(influx, speedMetrics);
 
