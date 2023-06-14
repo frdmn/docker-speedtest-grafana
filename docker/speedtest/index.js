@@ -8,6 +8,7 @@ process.env.INFLUXDB_USERNAME = (process.env.INFLUXDB_USERNAME) ? process.env.IN
 process.env.INFLUXDB_PASSWORD = (process.env.INFLUXDB_PASSWORD) ? process.env.INFLUXDB_PASSWORD : 'root';
 process.env.SPEEDTEST_HOST = (process.env.SPEEDTEST_HOST) ? process.env.SPEEDTEST_HOST : 'local';
 process.env.SPEEDTEST_INTERVAL = (process.env.SPEEDTEST_INTERVAL) ? process.env.SPEEDTEST_INTERVAL : 3600;
+process.env.SPEEDTEST_SERVER = (process.env.SPEEDTEST_SERVER);
 
 const bitToMbps = bit => (bit / 1000 / 1000) * 8;
 
@@ -24,7 +25,8 @@ const getSpeedMetrics = async () => {
   return {
     upload: bitToMbps(result.upload.bandwidth),
     download: bitToMbps(result.download.bandwidth),
-    ping: result.ping.latency
+    ping: result.ping.latency,
+    jitter: result.ping.jitter
   };
 };
 
@@ -51,7 +53,7 @@ const pushToInflux = async (influx, metrics) => {
       log("Starting speedtest...");
       const speedMetrics = await getSpeedMetrics();
       log(
-        `Speedtest results - Download: ${speedMetrics.download}, Upload: ${speedMetrics.upload}, Ping: ${speedMetrics.ping}`
+        `Speedtest results - Download: ${speedMetrics.download}, Upload: ${speedMetrics.upload}, Ping: ${speedMetrics.ping}, Jitter: ${speedMetrics.jitter}`
       );
       await pushToInflux(influx, speedMetrics);
 
