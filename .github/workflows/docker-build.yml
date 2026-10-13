@@ -1,45 +1,73 @@
-name: Multi-arch build and push to hub
+name: Docker image
 
+# PRs: test + multi-arch build, no push. main: push "edge". Tags v*: push semver tags + "latest".
 on:
   push:
-    branches: master
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  main:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-qemu-action@v4
+
+      - uses: docker/setup-buildx-action@v4
+
+      # Runs inside the image so jq matches production.
+      - name: Test
+        run: |
+          docker buildx build --load -t speedtest-test docker/speedtest
+          docker run --rm -v "$PWD/docker/speedtest:/t" -w /t --entrypoint sh speedtest-test test.sh
+
+      - uses: docker/metadata-action@v6
+        id: meta
+        with:
+          images: |
+            frdmn/speedtest-grafana
+            ghcr.io/${{ github.repository_owner }}/speedtest-grafana
+          tags: |
+            type=edge,branch=main
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+
+      - uses: docker/login-action@v4
+        if: github.event_name != 'pull_request'
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
+
+      - uses: docker/login-action@v4
+        if: github.event_name != 'pull_request'
         with:
-          context: ./docker/speedtest
-          file: ./docker/speedtest/Dockerfile
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
-          push: true
-          tags: frdmn/speedtest-grafana:latest
-      -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-      -
-        name: Update Docker Hub description
-        uses: peter-evans/dockerhub-description@v2
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v7
+        with:
+          context: docker/speedtest
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - uses: peter-evans/dockerhub-description@v5
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: peterevans/dockerhub-description
+          repository: frdmn/speedtest-grafana
+          short-description: Speedtest.net (Ookla CLI) runner that writes results to InfluxDB for Grafana
+          readme-filepath: README.md
+          enable-url-completion: true
