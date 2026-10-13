@@ -1,0 +1,1 @@
+speedtest,host=test,server_id=75868,server_name=Foo\,\ Bar\=Baz\ GmbH,server_location=Bad\ "Quote",isp=unknown download=234.296712,upload=156.968808,ping=10.618,jitter=0.587,ping_low=10.186,ping_high=11.470,download_latency=24.316,upload_latency=116.196,download_bytes=152913076i,upload_bytes=128081920i,result_url="https://example.com/a\"b\\c" 1791906371

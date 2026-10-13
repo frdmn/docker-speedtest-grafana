@@ -1,24 +1,23 @@
-FROM debian:10-slim AS get-speedtest
+FROM alpine:3.24
 
-RUN apt-get update && apt-get install gnupg1 apt-transport-https dirmngr lsb-release -y
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 379CE192D401AB61
-RUN echo "deb https://ookla.bintray.com/debian $(lsb_release -sc) main" | tee  /etc/apt/sources.list.d/speedtest.list
-RUN apt-get update
-RUN apt-get install speedtest
+ARG TARGETARCH
+ARG TARGETVARIANT
 
-FROM alpine as install-dependencies
-RUN apk add --no-cache npm
-WORKDIR /build
-COPY . .
-RUN npm ci
+# Ookla publishes no checksums; bump the version and all three hashes together.
+RUN apk add --no-cache curl jq tini tzdata \
+ && case "${TARGETARCH}${TARGETVARIANT}" in \
+      amd64) arch=x86_64  sha=5690596c54ff9bed63fa3732f818a05dbc2db19ad36ed68f21ca5f64d5cfeeb7 ;; \
+      arm64) arch=aarch64 sha=3953d231da3783e2bf8904b6dd72767c5c6e533e163d3742fd0437affa431bd3 ;; \
+      armv7) arch=armhf   sha=e45fcdebbd8a185553535533dd032d6b10bc8c64eee4139b1147b9c09835d08d ;; \
+      *) echo "unsupported platform: ${TARGETARCH}${TARGETVARIANT}" >&2; exit 1 ;; \
+    esac \
+ && curl -fsSL -o /tmp/speedtest.tgz "https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-${arch}.tgz" \
+ && echo "${sha}  /tmp/speedtest.tgz" | sha256sum -c - \
+ && tar xzf /tmp/speedtest.tgz -C /usr/local/bin speedtest \
+ && rm /tmp/speedtest.tgz
 
-FROM alpine as prod-stage
-RUN apk add --no-cache nodejs
-LABEL maintainer="Jonas Friedmann <j@frd.mn>"
+WORKDIR /app
+COPY speedtest.sh to-lp.jq ./
 
-WORKDIR /usr/src/app
-
-CMD [ "node", "index.js" ]
-
-COPY --from=get-speedtest /usr/bin/speedtest /usr/bin/speedtest
-COPY --from=install-dependencies /build .
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["/app/speedtest.sh"]
