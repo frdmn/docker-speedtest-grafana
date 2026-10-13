@@ -1,0 +1,55 @@
+{
+  "type": "result",
+  "timestamp": "2026-10-13T15:46:11Z",
+  "ping": {
+    "jitter": 0.587,
+    "latency": 10.618,
+    "low": 10.186,
+    "high": 11.470
+  },
+  "download": {
+    "bandwidth": 29287089,
+    "bytes": 152913076,
+    "elapsed": 5200,
+    "latency": {
+      "iqm": 24.316,
+      "low": 12.440,
+      "high": 144.438,
+      "jitter": 23.790
+    }
+  },
+  "upload": {
+    "bandwidth": 19621101,
+    "bytes": 128081920,
+    "elapsed": 6608,
+    "latency": {
+      "iqm": 116.196,
+      "low": 15.636,
+      "high": 455.434,
+      "jitter": 41.817
+    }
+  },
+  "packetLoss": 0,
+  "isp": "Deutsche Telekom AG",
+  "interface": {
+    "internalIp": "192.168.1.2",
+    "name": "eth0",
+    "macAddr": "02:00:00:00:00:01",
+    "isVpn": false,
+    "externalIp": "203.0.113.7"
+  },
+  "server": {
+    "id": 75868,
+    "host": "ber-tc.wsqm.telekom-dienste.de",
+    "port": 8080,
+    "name": "Deutsche Telekom",
+    "location": "Berlin",
+    "country": "Germany",
+    "ip": "198.51.100.20"
+  },
+  "result": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "url": "https://www.speedtest.net/result/c/00000000-0000-0000-0000-000000000000",
+    "persisted": true
+  }
+}
