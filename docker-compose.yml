@@ -1,38 +1,47 @@
-version: '2'
-
 services:
   influxdb:
-    restart: always
-    image: influxdb:1.8
-    ports:
-      - "8086:8086"
-    volumes:
-      - "./data/influxdb/:/var/lib/influxdb"
+    image: influxdb:1.12.4
+    restart: unless-stopped
     environment:
-      - "INFLUXDB_ADMIN_USER=admin"
-      - "INFLUXDB_ADMIN_PASSWORD=password"
-      - "INFLUXDB_DB=speedtest"
+      INFLUXDB_DB: speedtest
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: ${INFLUXDB_ADMIN_PASSWORD:-}   # empty: generated once, printed in the log
+      INFLUXDB_USER: speedtest
+      INFLUXDB_USER_PASSWORD: ${INFLUXDB_PASSWORD:?set INFLUXDB_PASSWORD in .env}
+    volumes:
+      - influxdb-data:/var/lib/influxdb
 
   grafana:
-    restart: always
-    image: grafana/grafana:6.7.2
-    volumes:
-      - "./docker/grafana/provisioning:/etc/grafana/provisioning"
+    image: grafana/grafana:13.2.3
+    restart: unless-stopped
     ports:
-      - "${GRAFANA_PORT}:3000"
+      - "${GRAFANA_PORT:-3000}:3000"
     environment:
-      - "GF_SERVER_ROOT_URL=http://localhost"
-      - "GF_SECURITY_ADMIN_PASSWORD=admin"
-      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?set GRAFANA_ADMIN_PASSWORD in .env}
+      GF_AUTH_ANONYMOUS_ENABLED: ${GRAFANA_ANONYMOUS:-false}
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_PASSWORD: ${INFLUXDB_PASSWORD}
+    volumes:
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
     depends_on:
       - influxdb
 
   speedtest:
-    restart: always
-    image: frdmn/speedtest-grafana:latest
-    container_name: speedtest
+    image: frdmn/speedtest-grafana:2
+    restart: unless-stopped
     environment:
-      - "SPEEDTEST_INTERVAL=${SPEEDTEST_SPEEDTEST_INTERVAL}"
-      - "SPEEDTEST_HOST=${SPEEDTEST_HOST}"
+      INFLUXDB_URL: http://influxdb:8086
+      INFLUXDB_PASSWORD: ${INFLUXDB_PASSWORD}
+      SPEEDTEST_HOST: ${SPEEDTEST_HOST:-local}
+      SPEEDTEST_INTERVAL: ${SPEEDTEST_INTERVAL:-3600}
+      SPEEDTEST_CRON: ${SPEEDTEST_CRON:-}
+      SPEEDTEST_SERVER: ${SPEEDTEST_SERVER:-}
+      TZ: ${TZ:-UTC}
     depends_on:
       - influxdb
+
+volumes:
+  influxdb-data:
+  grafana-data:

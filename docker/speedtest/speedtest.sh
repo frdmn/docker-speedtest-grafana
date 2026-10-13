@@ -1,5 +1,5 @@
 #!/bin/sh
-# Runs Ookla speedtests and writes the results to InfluxDB (v1 /write API, also served by InfluxDB 3).
+# Runs Ookla speedtests and writes the results to InfluxDB (1.x /write API).
 set -u
 
 : "${INFLUXDB_URL:=http://influxdb:8086}"
@@ -31,7 +31,8 @@ test_server() {
     return
   fi
   log "$(printf '%s' "$json" | jq -r '"Result: download \(.download.bandwidth * 8 / 1e4 | round / 100) Mbps, upload \(.upload.bandwidth * 8 / 1e4 | round / 100) Mbps, ping \(.ping.latency) ms, server \(.server.name) (\(.server.id))"')"
-  if ! out=$(printf '%s\n' "$line" | curl -sS --fail-with-body -m 30 -u "$INFLUXDB_USERNAME:$INFLUXDB_PASSWORD" \
+  # Retries cover the DB still starting up (fresh install) or restarting.
+  if ! out=$(printf '%s\n' "$line" | curl -sS --fail-with-body -m 30 --retry 10 --retry-connrefused --retry-delay 3 -u "$INFLUXDB_USERNAME:$INFLUXDB_PASSWORD" \
       --data-binary @- "$INFLUXDB_URL/write?db=$INFLUXDB_DB&precision=s" 2>&1); then
     log "ERROR: writing to InfluxDB failed: $out"
   fi

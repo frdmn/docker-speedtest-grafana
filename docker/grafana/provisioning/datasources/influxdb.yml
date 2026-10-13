@@ -1,13 +1,16 @@
 apiVersion: 1
 
-deleteDatasources:
-  - name: InfluxDB
-
 datasources:
   - name: InfluxDB
+    uid: influxdb
     type: influxdb
     access: proxy
-    database: speedtest
-    user: admin
-    password: password
-    url: http://influxdb:8086
+    url: $INFLUXDB_URL
+    user: speedtest
+    isDefault: true
+    jsonData:
+      dbName: speedtest
+      httpMode: POST
+      version: InfluxQL
+    secureJsonData:
+      password: $INFLUXDB_PASSWORD
