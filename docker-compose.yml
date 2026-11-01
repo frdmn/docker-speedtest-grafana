@@ -1,6 +1,6 @@
 services:
   influxdb:
-    image: influxdb:1.12.4
+    image: influxdb:2.9.1
     restart: unless-stopped
     environment:
       INFLUXDB_DB: speedtest
