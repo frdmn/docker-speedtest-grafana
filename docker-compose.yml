@@ -13,7 +13,7 @@ services:
       - influxdb-data:/var/lib/influxdb
 
   grafana:
-    image: grafana/grafana:13.2.3
+    image: grafana/grafana:13.3.0
     restart: unless-stopped
     ports:
       - "${GRAFANA_PORT:-3000}:3000"
